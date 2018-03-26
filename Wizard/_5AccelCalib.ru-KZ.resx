@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label3.Text" xml:space="preserve">
-    <value>GeoFence - это виртуальный забор, который автопилот не будет пересекать. Настройки основаны на исходной позиции</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Колебровка минимальных и максимальных значений, вашиго акселерометра. Нажмите «Начать» и повторяйте за изображениями.</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Настройки GeoFence</value>
+    <value>КАЛИБРОВКА АКСЕЛЕРОМЕТРА</value>
+  </data>
+  <data name="BUT_start.Text" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="radialGradientBG1.Label.Text" xml:space="preserve">
+    <value>Откалибруйте свой акселерометр</value>
+  </data>
+  <data name="BUT_continue.Text" xml:space="preserve">
+    <value>Продолжить</value>
   </data>
 </root>

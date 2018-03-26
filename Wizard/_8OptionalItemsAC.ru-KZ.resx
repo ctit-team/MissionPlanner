@@ -117,13 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="mavlinkCheckBox1.Text" xml:space="preserve">
+    <value>Включить</value>
+  </data>
+  <data name="mavlinkCheckBox2.Text" xml:space="preserve">
+    <value>Включить</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Расст.:</value>
+  </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Здесь мы выбираем, какие режимы полета вы хотите на основе положения переключателя вашего передатчика.</value>
+    <value>Есть ли у вас СОНАР?</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Выбор режима полета</value>
+    <value>Сонар</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>У вас есть датчик оптического потока?</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Оптический поток</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Напряж.:</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Мод. сонара</value>
   </data>
   <data name="radialGradientBG1.Label.Text" xml:space="preserve">
-    <value>Режимы полета</value>
+    <value>Доп. элементы</value>
   </data>
 </root>
