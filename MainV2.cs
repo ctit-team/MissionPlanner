@@ -527,7 +527,13 @@ namespace MissionPlanner
                 }
                 t.SelectedIndex = 0;
 
-                MainV2.instance.FlightData.loadTabControlActions();
+                //!--CTIT
+                t.TabPages.Remove(FlightData.tabActions);
+                t.TabPages.Remove(FlightData.tabScripts);
+                t.TabPages.Remove(FlightData.tabActionsSimple);
+                t.TabPages.Remove(FlightData.tabServo);
+
+                //MainV2.instance.FlightData.loadTabControlActions();
             }
 
             if (MainV2.instance.FlightPlanner != null)
@@ -570,15 +576,15 @@ namespace MissionPlanner
             instance = this;
 
             //disable dpi scaling
-            if (Font.Name != "宋体")
-            {
-                //Chinese displayed normally when scaling. But would be too small or large using this line of code.
-                using (var g = CreateGraphics())
-                {
-                    Font = new Font(Font.Name, 8.25f*96f/g.DpiX, Font.Style, Font.Unit, Font.GdiCharSet,
-                        Font.GdiVerticalFont);
-                }
-            }
+            //if (Font.Name != "宋体")
+            //{
+            //    //Chinese displayed normally when scaling. But would be too small or large using this line of code.
+            //    using (var g = CreateGraphics())
+            //    {
+            //        Font = new Font(Font.Name, 8.25f*96f/g.DpiX, Font.Style, Font.Unit, Font.GdiCharSet,
+            //            Font.GdiVerticalFont);
+            //    }
+            //}
 
             InitializeComponent();
             try
@@ -994,7 +1000,27 @@ namespace MissionPlanner
                 MenuDonate.Image = Program.Logo;
             }
 
+            //!--CTIT
+            MenuFlightData.Visible = true;
+            MenuFlightPlanner.Visible = true;
+            MenuConfigTune.Visible = false;
+            MenuHelp.Visible = false;
+            MenuInitConfig.Visible = false;
+            MenuSimulation.Visible = false;
+            MenuTerminal.Visible = false;
+            MenuDonate.Visible = false;
+            MenuArduPilot.Visible = false;
 
+            this.TopMost = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.WindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Maximized;
+            fullScreenToolStripMenuItem.Checked = true;
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.Location = new Point(100, 100);
+            }
 
             Application.DoEvents();
 
@@ -2778,44 +2804,48 @@ namespace MissionPlanner
 
         protected override void OnLoad(EventArgs e)
         {
+            //!--CTIT
+            AutoHideMenu(false);
             // check if its defined, and force to show it if not known about
-            if (Settings.Instance["menu_autohide"] == null)
-            {
-                Settings.Instance["menu_autohide"] = "false";
-            }
+            //if (Settings.Instance["menu_autohide"] == null)
+            //{
+            //    Settings.Instance["menu_autohide"] = "false";
+            //}
 
-            try
-            {
-                AutoHideMenu(Settings.Instance.GetBoolean("menu_autohide"));
-            }
-            catch
-            {
-            }
+            //try
+            //{
+            //    AutoHideMenu(Settings.Instance.GetBoolean("menu_autohide"));
+            //}
+            //catch
+            //{
+            //}
 
+            //!--CTIT
             MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
             MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
-            MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
-            MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
-            MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
-            MyView.AddScreen(new MainSwitcher.Screen("Terminal", typeof(GCSViews.Terminal), false));
-            MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
+            //MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
+            //MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
+            //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
+            //MyView.AddScreen(new MainSwitcher.Screen("Terminal", typeof(GCSViews.Terminal), false));
+            //MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
-            try
-            {
-                if (Control.ModifierKeys == Keys.Shift)
-                {
-                }
-                else
-                {
-                    log.Info("Load Pluggins");
-                    Plugin.PluginLoader.LoadAll();
-                    log.Info("Load Pluggins... Done");
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
+            //!--CTIT
+            //try
+            //{
+            //    if (Control.ModifierKeys == Keys.Shift)
+            //    {
+            //    }
+            //    else
+            //    {
+            //        log.Info("Load Pluggins");
+            //        Plugin.PluginLoader.LoadAll();
+            //        log.Info("Load Pluggins... Done");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Error(ex);
+            //}
 
             if (Program.Logo != null && Program.name == "VVVVZ")
             {
@@ -2892,12 +2922,14 @@ namespace MissionPlanner
 
             ThreadPool.QueueUserWorkItem(BGgetTFR);
 
-            ThreadPool.QueueUserWorkItem(BGNoFly);
+            //!--CTIT
+            //ThreadPool.QueueUserWorkItem(BGNoFly);
 
             ThreadPool.QueueUserWorkItem(BGGetKIndex);
 
+            //!--CTIT
             // update firmware version list - only once per day
-            ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
+            //ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
 
             log.Info("start udpvideoshim");
             // start listener
@@ -3004,21 +3036,22 @@ namespace MissionPlanner
             MissionPlanner.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
                 (DateTime.Now - Program.starttime).TotalMilliseconds, "");
 
-            bool winXp = Environment.OSVersion.Version.Major == 5;
-            if (winXp)
-            {
-                Common.MessageShowAgain("Windows XP",
-                    "This is the last version that will support Windows XP, please update your OS");
+            //!--CTIT
+            //bool winXp = Environment.OSVersion.Version.Major == 5;
+            //if (winXp)
+            //{
+            //    Common.MessageShowAgain("Windows XP",
+            //        "This is the last version that will support Windows XP, please update your OS");
 
-                // invalidate update url
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] =
-                    "http://firmware.ardupilot.org/MissionPlanner/xp/";
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocation"] =
-                    "http://firmware.ardupilot.org/MissionPlanner/xp/";
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationMD5"] =
-                    "http://firmware.ardupilot.org/MissionPlanner/xp/checksums.txt";
-                System.Configuration.ConfigurationManager.AppSettings["BetaUpdateLocationVersion"] = "";
-            }
+            //    // invalidate update url
+            //    System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] =
+            //        "http://firmware.ardupilot.org/MissionPlanner/xp/";
+            //    System.Configuration.ConfigurationManager.AppSettings["UpdateLocation"] =
+            //        "http://firmware.ardupilot.org/MissionPlanner/xp/";
+            //    System.Configuration.ConfigurationManager.AppSettings["UpdateLocationMD5"] =
+            //        "http://firmware.ardupilot.org/MissionPlanner/xp/checksums.txt";
+            //    System.Configuration.ConfigurationManager.AppSettings["BetaUpdateLocationVersion"] = "";
+            //}
 
             try
             {
@@ -3114,20 +3147,22 @@ namespace MissionPlanner
                 }
             }
 
+
+            //!--CTIT
             // show wizard on first use
-            if (Settings.Instance["newuser"] == null)
-            {
-                if (CustomMessageBox.Show("This is your first run, Do you wish to use the setup wizard?\nRecomended for new users.", "Wizard", MessageBoxButtons.YesNo) == (int)System.Windows.Forms.DialogResult.Yes)
-                {
-                    Wizard.Wizard wiz = new Wizard.Wizard();
+            //if (Settings.Instance["newuser"] == null)
+            //{
+            //    if (CustomMessageBox.Show("This is your first run, Do you wish to use the setup wizard?\nRecomended for new users.", "Wizard", MessageBoxButtons.YesNo) == (int)System.Windows.Forms.DialogResult.Yes)
+            //    {
+            //        Wizard.Wizard wiz = new Wizard.Wizard();
 
-                    wiz.ShowDialog(this);
-                }
+            //        wiz.ShowDialog(this);
+            //    }
 
-                CustomMessageBox.Show("To use the wizard please goto the initial setup screen, and click the wizard icon.", "Wizard");
+            //    CustomMessageBox.Show("To use the wizard please goto the initial setup screen, and click the wizard icon.", "Wizard");
 
-                Settings.Instance["newuser"] = DateTime.Now.ToShortDateString();
-            }
+            //    Settings.Instance["newuser"] = DateTime.Now.ToShortDateString();
+            //}
         }
 
         private Dictionary<string, string> ProcessCommandLine(string[] args)
