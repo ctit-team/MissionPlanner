@@ -528,7 +528,7 @@ namespace MissionPlanner
                 t.SelectedIndex = 0;
 
                 //!--CTIT
-                t.TabPages.Remove(FlightData.tabActions);
+                //t.TabPages.Remove(FlightData.tabActions);
                 t.TabPages.Remove(FlightData.tabScripts);
                 t.TabPages.Remove(FlightData.tabActionsSimple);
                 t.TabPages.Remove(FlightData.tabServo);
@@ -2829,23 +2829,22 @@ namespace MissionPlanner
             //MyView.AddScreen(new MainSwitcher.Screen("Terminal", typeof(GCSViews.Terminal), false));
             //MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
-            //!--CTIT
-            //try
-            //{
-            //    if (Control.ModifierKeys == Keys.Shift)
-            //    {
-            //    }
-            //    else
-            //    {
-            //        log.Info("Load Pluggins");
-            //        Plugin.PluginLoader.LoadAll();
-            //        log.Info("Load Pluggins... Done");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    log.Error(ex);
-            //}
+            try
+            {
+                if (Control.ModifierKeys == Keys.Shift)
+                {
+                }
+                else
+                {
+                    log.Info("Load Pluggins");
+                    Plugin.PluginLoader.LoadAll();
+                    log.Info("Load Pluggins... Done");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
 
             if (Program.Logo != null && Program.name == "VVVVZ")
             {
