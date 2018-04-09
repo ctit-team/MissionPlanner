@@ -1292,10 +1292,21 @@ namespace MissionPlanner.GCSViews
 
             updateRowNumbers();
 
-            var home = new PointLatLngAlt(
-                    double.Parse(TXT_homelat.Text), double.Parse(TXT_homelng.Text),
-                    double.Parse(TXT_homealt.Text) / CurrentState.multiplieralt, "H")
-                {Tag2 = CMB_altmode.SelectedValue.ToString()};
+            PointLatLngAlt home = new PointLatLngAlt();
+            if (TXT_homealt.Text != "" && TXT_homelat.Text != "" && TXT_homelng.Text != "")
+            {
+                try
+                {
+                    home = new PointLatLngAlt(
+                        double.Parse(TXT_homelat.Text), double.Parse(TXT_homelng.Text),
+                        double.Parse(TXT_homealt.Text) / CurrentState.multiplieralt, "H")
+                    { Tag2 = CMB_altmode.SelectedValue.ToString() };
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
 
             var overlay = new WPOverlay();
 
@@ -1315,11 +1326,11 @@ namespace MissionPlanner.GCSViews
             overlay.overlay.ForceUpdate();
 
             lbl_distance.Text = rm.GetString("lbl_distance.Text") + ": " +
-                                FormatDistance(
+                                FormatDistance((
                                     overlay.route.Points.Select(a => (PointLatLngAlt) a)
                                         .Aggregate(0.0, (d, p1, p2) => d + p1.GetDistance(p2)) + 
                                     overlay.homeroute.Points.Select(a => (PointLatLngAlt) a)
-                                        .Aggregate(0.0, (d, p1, p2) => d + p1.GetDistance(p2)), false);
+                                        .Aggregate(0.0, (d, p1, p2) => d + p1.GetDistance(p2)))/1000.0, false);
 
             setgradanddistandaz(overlay.pointlist, home);
 
@@ -1712,7 +1723,7 @@ namespace MissionPlanner.GCSViews
                 Text = "Sending WP's"
             };
 
-            frmProgressReporter.DoWork += saveWPsFast;//saveWPs;
+            frmProgressReporter.DoWork += saveWPs;
             frmProgressReporter.UpdateProgressAndStatus(-1, "Sending WP's");
 
             ThemeManager.ApplyThemeTo(frmProgressReporter);
@@ -4882,6 +4893,13 @@ namespace MissionPlanner.GCSViews
         {
             timer1.Start();
 
+            // set the firmware type if we are not connected. this allows overrideing
+            if (!MainV2.comPort.BaseStream.IsOpen)
+            {
+                MainV2.comPort.MAV.cs.firmware = (Firmwares) MainV2._connectionControl.TOOL_APMFirmware.SelectedItem;
+            }
+
+            // hide altmode if old copter version
             if (MainV2.comPort.BaseStream.IsOpen && MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2 &&
                 MainV2.comPort.MAV.cs.version < new Version(3, 3))
             {
@@ -4891,6 +4909,12 @@ namespace MissionPlanner.GCSViews
             {
                 CMB_altmode.Visible = true;
             }
+
+            // hide spline wp options if not arducopter
+            if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
+                CHK_splinedefault.Visible = true;
+            else
+                CHK_splinedefault.Visible = false;
 
             updateHome();
 
@@ -5143,7 +5167,7 @@ namespace MissionPlanner.GCSViews
                                     new GMapRoute(ls.Select(a => new PointLatLngAlt(a.y, a.x, a.z).Point()), "")
                                     {
                                         IsHitTestVisible = false,
-                                        Stroke = Pens.Red
+                                        Stroke = new Pen(Color.Red)
                                     };
                                 FlightData.kmlpolygons.Routes.Add(route);
                                 kmlpolygonsoverlay.Routes.Add(route);
@@ -5155,7 +5179,7 @@ namespace MissionPlanner.GCSViews
                                     {
                                         Fill = Brushes.Transparent,
                                         IsHitTestVisible = false,
-                                        Stroke = Pens.Red
+                                        Stroke = new Pen(Color.Red)
                                     };
                                 FlightData.kmlpolygons.Polygons.Add(polygon);
                                 kmlpolygonsoverlay.Polygons.Add(polygon);
