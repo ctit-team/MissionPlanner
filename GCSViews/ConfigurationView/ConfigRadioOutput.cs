@@ -29,6 +29,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             setup(BAR6, rev6, func6, min6, trim6, max6, 6);
             setup(BAR7, rev7, func7, min7, trim7, max7, 7);
             setup(BAR8, rev8, func8, min8, trim8, max8, 8);
+            setup(BAR9, rev9, func9, min9, trim9, max9, 9);
+            setup(BAR10, rev10, func10, min10, trim10, max10, 10);
+            setup(BAR11, rev11, func11, min11, trim11, max11, 11);
+            setup(BAR12, rev12, func12, min12, trim12, max12, 12);
+            setup(BAR13, rev13, func13, min13, trim13, max13, 13);
+            setup(BAR14, rev14, func14, min14, trim14, max14, 14);
+            setup(BAR15, rev15, func15, min15, trim15, max15, 15);
+            setup(BAR16, rev16, func16, min16, trim16, max16, 16);
             ResumeLayout(true);
         }
 
@@ -67,6 +75,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
