@@ -117,41 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label2.Text" xml:space="preserve">
-    <value>フライトコントローラーが機体の向いている方向を知るために、コンパスのキャリブレーションは重要です。
-機体の各軸(左、右、前、後、上、下)のを北に向けてキャリブレーションします。
-右を向いて360度回転、左を向いて360度...と全6軸について実施します。</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>ハードウェアによっては、コンパスの取付方向が異なります。以下の指示にしたがってください。
-位置合わせをするときは、フライトコントローラーを水平に維持してください。
-
-
-
-</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>コンパス　キャリブレーション</value>
-  </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>.</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>コンパス　キャリブレーション</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>スタートを押す</value>
-  </data>
-  <data name="linkLabel1.Text" xml:space="preserve">
-    <value>実例(Youtube)</value>
-  </data>
-  <data name="BUT_MagCalibrationLive.Text" xml:space="preserve">
-    <value>ライブ キャリブレーション</value>
-  </data>
-  <data name="BUT_compassorient.Text" xml:space="preserve">
-    <value>開始</value>
-  </data>
-  <data name="radialGradientBG1.Label.Text" xml:space="preserve">
-    <value>コンパスのキャリブレーション</value>
-  </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
