@@ -187,12 +187,12 @@
 
   <ItemGroup>
     <PackageReference Include="alglibnet2" version="0.0.0" targetFramework="net40" />
-    <PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.560" />
-    <PackageReference Include="BouncyCastle" version="1.8.1" targetFramework="net40" />
+    <PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.584.1" />
+    <PackageReference Include="BouncyCastle" version="1.8.2" targetFramework="net40" />
     <PackageReference Include="Community.CsharpSqlite.SQLiteClient" version="3.7.7.3" targetFramework="net462" />
     <PackageReference Include="CSMatIO" version="1.0.2" targetFramework="net40" requireReinstallation="true" />
     <PackageReference Include="DirectShowLib" Version="1.0.0" />
-    <PackageReference Include="DotNetZip" version="1.10.1" targetFramework="net40" />
+    <PackageReference Include="DotNetZip" version="1.11.0" targetFramework="net40" />
     <PackageReference Include="DotSpatial.Data" version="1.9" targetFramework="net462" />
     <PackageReference Include="DotSpatial.Data.Forms" version="1.9" targetFramework="net462" />
     <PackageReference Include="DotSpatial.Extensions" version="1.9" targetFramework="net462" />
@@ -205,20 +205,20 @@
     <PackageReference Include="DotSpatial.Symbology.Forms" version="1.9" targetFramework="net462" />
     <PackageReference Include="DotSpatial.Topology" version="1.9" targetFramework="net462" />
 
-    <PackageReference Include="Flurl" version="2.5.0" targetFramework="net462" />
-    <PackageReference Include="Flurl.Http" version="2.0.1" targetFramework="net462" />
+    <PackageReference Include="Flurl" version="2.7.1" targetFramework="net462" />
+    <PackageReference Include="Flurl.Http" version="2.3.1" targetFramework="net462" />
     <PackageReference Include="GDAL" Version="1.11.1" />
     <PackageReference Include="GeoJSON.Net" version="1.1.64" targetFramework="net462" />
-    <PackageReference Include="IronPython" version="2.7.7" targetFramework="net462" />
-    <PackageReference Include="IronPython.StdLib" version="2.7.7" targetFramework="net462" />
+    <PackageReference Include="IronPython" version="2.7.8.1" targetFramework="net462" />
+    <PackageReference Include="IronPython.StdLib" version="2.7.8.1" targetFramework="net462" />
     <PackageReference Include="log4net" version="2.0.8" targetFramework="net462" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
     <PackageReference Include="MP.GDAL.Native" Version="2.2.3" />
 
     <PackageReference Include="netDXF" version="2.0.2" targetFramework="net462" />
-    <PackageReference Include="Newtonsoft.Json" version="10.0.3" targetFramework="net462" />
+    <PackageReference Include="Newtonsoft.Json" version="11.0.2" targetFramework="net462" />
     <PackageReference Include="ProjNet" version="1.2" targetFramework="net40" />
-    <PackageReference Include="protobuf-net" version="2.1.0" targetFramework="net40" requireReinstallation="true" />
+    <PackageReference Include="protobuf-net" version="2.3.7" targetFramework="net40" requireReinstallation="true" />
     <PackageReference Include="SharpDX" version="4.0.1" targetFramework="net462" />
     <PackageReference Include="SharpDX.DirectInput" version="4.0.1" targetFramework="net462" />
     <PackageReference Include="SharpZipLib" version="0.86.0" targetFramework="net40" />
@@ -232,7 +232,7 @@
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
 
     <PackageReference Include="Unofficial.ObjectListView" version="2.6.0" targetFramework="net40" />
-    <PackageReference Include="Xamarin.Forms" version="3.0.0.446417" targetFramework="net462" />
+    <PackageReference Include="Xamarin.Forms" version="3.0.0.482510" targetFramework="net462" />
     <PackageReference Include="zlib.net" version="1.0.4.0" targetFramework="net40" />
   </ItemGroup>
 
