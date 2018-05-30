@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chk_advview.Text" xml:space="preserve">
-    <value>高度なメニュー</value>
-  </data>
-  <data name="BUT_Find.Text" xml:space="preserve">
-    <value>検索</value>
-  </data>
-  <data name="BUT_writePIDS.Text" xml:space="preserve">
-    <value>パラメータ書込</value>
-  </data>
-  <data name="BUT_rerequestparams.Text" xml:space="preserve">
-    <value>パラメータリフレッシュ</value>
-  </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
