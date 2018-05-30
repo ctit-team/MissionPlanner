@@ -9,11 +9,15 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Description />
+    <Configurations>Debug;Release;Release_Internal</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;MONO;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Internal|AnyCPU'">
     <DefineConstants>TRACE;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Configurations>Debug;Release;Release_Internal</Configurations>
  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
     <BumpRevision>false</BumpRevision>
@@ -36,6 +37,13 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Internal|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>TRACE;INTERNAL;RELEASE_INTERNAL;NET461;RELEASE_INTERNAL;NET461</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="APMPlannerXplanes\**" />

@@ -527,13 +527,14 @@ namespace MissionPlanner
                 }
                 t.SelectedIndex = 0;
 
+#if !INTERNAL
                 //!--CTIT
-                //t.TabPages.Remove(FlightData.tabActions);
                 t.TabPages.Remove(FlightData.tabScripts);
                 t.TabPages.Remove(FlightData.tabActionsSimple);
                 t.TabPages.Remove(FlightData.tabServo);
+#endif
 
-                //MainV2.instance.FlightData.loadTabControlActions();
+                MainV2.instance.FlightData.loadTabControlActions();
             }
 
             if (MainV2.instance.FlightPlanner != null)
@@ -1000,6 +1001,8 @@ namespace MissionPlanner
                 MenuDonate.Image = Program.Logo;
             }
 
+#if !INTERNAL
+
             //!--CTIT
             MenuFlightData.Visible = true;
             MenuFlightPlanner.Visible = true;
@@ -1021,6 +1024,8 @@ namespace MissionPlanner
                 this.WindowState = FormWindowState.Normal;
                 this.Location = new Point(100, 100);
             }
+
+#endif
 
             Application.DoEvents();
 
@@ -1591,42 +1596,43 @@ namespace MissionPlanner
                         _connectionControl.TOOL_APMFirmware.Items.IndexOf(Firmwares.ArduPlane);
                 }
 
-                // check for newer firmware
-                var softwares = Firmware.LoadSoftwares();
+                ////!--CTIT
+                //// check for newer firmware
+                //var softwares = Firmware.LoadSoftwares();
 
-                if (softwares.Count > 0)
-                {
-                    try
-                    {
-                        string[] fields1 = comPort.MAV.VersionString.Split(' ');
+                //if (softwares.Count > 0)
+                //{
+                //    try
+                //    {
+                //        string[] fields1 = comPort.MAV.VersionString.Split(' ');
 
-                        foreach (Firmware.software item in softwares)
-                        {
-                            string[] fields2 = item.name.Split(' ');
+                //        foreach (Firmware.software item in softwares)
+                //        {
+                //            string[] fields2 = item.name.Split(' ');
 
-                            // check primare firmware type. ie arudplane, arducopter
-                            if (fields1[0] == fields2[0])
-                            {
-                                Version ver1 = VersionDetection.GetVersion(comPort.MAV.VersionString);
-                                Version ver2 = VersionDetection.GetVersion(item.name);
+                //            // check primare firmware type. ie arudplane, arducopter
+                //            if (fields1[0] == fields2[0])
+                //            {
+                //                Version ver1 = VersionDetection.GetVersion(comPort.MAV.VersionString);
+                //                Version ver2 = VersionDetection.GetVersion(item.name);
 
-                                if (ver2 > ver1)
-                                {
-                                    Common.MessageShowAgain(Strings.NewFirmware + "-" + item.name,
-                                        Strings.NewFirmwareA + item.name + Strings.Pleaseup);
-                                    break;
-                                }
+                //                if (ver2 > ver1)
+                //                {
+                //                    Common.MessageShowAgain(Strings.NewFirmware + "-" + item.name,
+                //                        Strings.NewFirmwareA + item.name + Strings.Pleaseup);
+                //                    break;
+                //                }
 
-                                // check the first hit only
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
+                //                // check the first hit only
+                //                break;
+                //            }
+                //        }
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        log.Error(ex);
+                //    }
+                //}
 
                 FlightData.CheckBatteryShow();
 
@@ -2808,30 +2814,33 @@ namespace MissionPlanner
 
         protected override void OnLoad(EventArgs e)
         {
-            //!--CTIT
+#if !INTERNAL
             AutoHideMenu(false);
-            // check if its defined, and force to show it if not known about
-            //if (Settings.Instance["menu_autohide"] == null)
-            //{
-            //    Settings.Instance["menu_autohide"] = "false";
-            //}
-
-            //try
-            //{
-            //    AutoHideMenu(Settings.Instance.GetBoolean("menu_autohide"));
-            //}
-            //catch
-            //{
-            //}
-
-            //!--CTIT
             MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
             MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
-            //MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
-            //MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
-            //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
-            //MyView.AddScreen(new MainSwitcher.Screen("Terminal", typeof(GCSViews.Terminal), false));
-            //MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
+#else
+            // check if its defined, and force to show it if not known about
+            if (Settings.Instance["menu_autohide"] == null)
+            {
+                Settings.Instance["menu_autohide"] = "false";
+            }
+
+            try
+            {
+                AutoHideMenu(Settings.Instance.GetBoolean("menu_autohide"));
+            }
+            catch
+            {
+            }
+
+            MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
+            MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
+            MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
+            MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
+            MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
+            MyView.AddScreen(new MainSwitcher.Screen("Terminal", typeof(GCSViews.Terminal), false));
+            MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
+#endif
 
             try
             {
@@ -2925,14 +2934,14 @@ namespace MissionPlanner
 
             ThreadPool.QueueUserWorkItem(BGgetTFR);
 
+#if INTERNAL
             //!--CTIT
             //ThreadPool.QueueUserWorkItem(BGNoFly);
-
-            ThreadPool.QueueUserWorkItem(BGGetKIndex);
-
-            //!--CTIT
             // update firmware version list - only once per day
             //ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
+#endif
+
+            ThreadPool.QueueUserWorkItem(BGGetKIndex);
 
             log.Info("start udpvideoshim");
             // start listener
@@ -3056,117 +3065,117 @@ namespace MissionPlanner
             //    System.Configuration.ConfigurationManager.AppSettings["BetaUpdateLocationVersion"] = "";
             //}
 
-            try
-            {
-                // single update check per day - in a seperate thread
-                if (Settings.Instance["update_check"] != DateTime.Now.ToShortDateString())
-                {
-                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
-                    Settings.Instance["update_check"] = DateTime.Now.ToShortDateString();
-                }
-                else if (Settings.Instance.GetBoolean("beta_updates") == true)
-                {
-                    MissionPlanner.Utilities.Update.dobeta = true;
-                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error("Update check failed", ex);
-            }
+            //try
+            //{
+            //    // single update check per day - in a seperate thread
+            //    if (Settings.Instance["update_check"] != DateTime.Now.ToShortDateString())
+            //    {
+            //        System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
+            //        Settings.Instance["update_check"] = DateTime.Now.ToShortDateString();
+            //    }
+            //    else if (Settings.Instance.GetBoolean("beta_updates") == true)
+            //    {
+            //        MissionPlanner.Utilities.Update.dobeta = true;
+            //        System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Error("Update check failed", ex);
+            //}
 
             // play a tlog that was passed to the program/ load a bin log passed
-            if (Program.args.Length > 0)
-            {
-                var cmds = ProcessCommandLine(Program.args);
+            //if (Program.args.Length > 0)
+            //{
+            //    var cmds = ProcessCommandLine(Program.args);
 
-                if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) && cmds["file"].ToLower().EndsWith(".tlog"))
-                {
-                    FlightData.LoadLogFile(Program.args[0]);
-                    FlightData.BUT_playlog_Click(null, null);
-                }
-                else if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) &&
-                         (cmds["file"].ToLower().EndsWith(".log") || cmds["file"].ToLower().EndsWith(".bin")))
-                {
-                    LogBrowse logbrowse = new LogBrowse();
-                    ThemeManager.ApplyThemeTo(logbrowse);
-                    logbrowse.logfilename = Program.args[0];
-                    logbrowse.Show(this);
-                    logbrowse.BringToFront();
-                }
+            //    if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) && cmds["file"].ToLower().EndsWith(".tlog"))
+            //    {
+            //        FlightData.LoadLogFile(Program.args[0]);
+            //        FlightData.BUT_playlog_Click(null, null);
+            //    }
+            //    else if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) &&
+            //             (cmds["file"].ToLower().EndsWith(".log") || cmds["file"].ToLower().EndsWith(".bin")))
+            //    {
+            //        LogBrowse logbrowse = new LogBrowse();
+            //        ThemeManager.ApplyThemeTo(logbrowse);
+            //        logbrowse.logfilename = Program.args[0];
+            //        logbrowse.Show(this);
+            //        logbrowse.BringToFront();
+            //    }
 
-                if (cmds.ContainsKey("script") && File.Exists(cmds["script"]))
-                {
-                    // invoke for after onload finished
-                    this.BeginInvoke((Action) delegate()
-                    {
-                        try
-                        {
-                            FlightData.selectedscript = cmds["script"];
+            //    if (cmds.ContainsKey("script") && File.Exists(cmds["script"]))
+            //    {
+            //        // invoke for after onload finished
+            //        this.BeginInvoke((Action) delegate()
+            //        {
+            //            try
+            //            {
+            //                FlightData.selectedscript = cmds["script"];
 
-                            FlightData.BUT_run_script_Click(null, null);
-                        }
-                        catch (Exception ex)
-                        {
-                            CustomMessageBox.Show("Start script failed: "+ex.ToString(), Strings.ERROR);
-                        }
-                    });
-                }
+            //                FlightData.BUT_run_script_Click(null, null);
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                CustomMessageBox.Show("Start script failed: "+ex.ToString(), Strings.ERROR);
+            //            }
+            //        });
+            //    }
 
-                if (cmds.ContainsKey("joy") && cmds.ContainsKey("type"))
-                {
-                    if (cmds["type"].ToLower() == "plane")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduPlane;
-                    }
-                    else if (cmds["type"].ToLower() == "copter")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduCopter2;
-                    }
-                    else if (cmds["type"].ToLower() == "rover")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduRover;
-                    }
-                    else if (cmds["type"].ToLower() == "sub")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduSub;
-                    }
+            //    if (cmds.ContainsKey("joy") && cmds.ContainsKey("type"))
+            //    {
+            //        if (cmds["type"].ToLower() == "plane")
+            //        {
+            //            MainV2.comPort.MAV.cs.firmware = Firmwares.ArduPlane;
+            //        }
+            //        else if (cmds["type"].ToLower() == "copter")
+            //        {
+            //            MainV2.comPort.MAV.cs.firmware = Firmwares.ArduCopter2;
+            //        }
+            //        else if (cmds["type"].ToLower() == "rover")
+            //        {
+            //            MainV2.comPort.MAV.cs.firmware = Firmwares.ArduRover;
+            //        }
+            //        else if (cmds["type"].ToLower() == "sub")
+            //        {
+            //            MainV2.comPort.MAV.cs.firmware = Firmwares.ArduSub;
+            //        }
 
-                    var joy = new Joystick.Joystick();
+            //        var joy = new Joystick.Joystick();
 
-                    if (joy.start(cmds["joy"]))
-                    {
-                        MainV2.joystick = joy;
-                        MainV2.joystick.enabled = true;
-                    }
-                    else
-                    {
-                        CustomMessageBox.Show("Failed to start joystick");
-                    }
-                }
+            //        if (joy.start(cmds["joy"]))
+            //        {
+            //            MainV2.joystick = joy;
+            //            MainV2.joystick.enabled = true;
+            //        }
+            //        else
+            //        {
+            //            CustomMessageBox.Show("Failed to start joystick");
+            //        }
+            //    }
 
-                if (cmds.ContainsKey("cam"))
-                {
-                    try
-                    {
-                        MainV2.cam = new WebCamService.Capture(int.Parse(cmds["cam"]), null);
+            //    if (cmds.ContainsKey("cam"))
+            //    {
+            //        try
+            //        {
+            //            MainV2.cam = new WebCamService.Capture(int.Parse(cmds["cam"]), null);
 
-                        MainV2.cam.Start();
-                    }
-                    catch (Exception ex)
-                    {
-                        CustomMessageBox.Show(ex.ToString());
-                    }
-                }
+            //            MainV2.cam.Start();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            CustomMessageBox.Show(ex.ToString());
+            //        }
+            //    }
 
-                if (cmds.ContainsKey("port") && cmds.ContainsKey("baud"))
-                {
-                    _connectionControl.CMB_serialport.Text = cmds["port"];
-                    _connectionControl.CMB_baudrate.Text = cmds["baud"];
+            //    if (cmds.ContainsKey("port") && cmds.ContainsKey("baud"))
+            //    {
+            //        _connectionControl.CMB_serialport.Text = cmds["port"];
+            //        _connectionControl.CMB_baudrate.Text = cmds["baud"];
 
-                    doConnect(MainV2.comPort, cmds["port"], cmds["baud"]);
-                }
-            }
+            //        doConnect(MainV2.comPort, cmds["port"], cmds["baud"]);
+            //    }
+            //}
 
 
             //!--CTIT

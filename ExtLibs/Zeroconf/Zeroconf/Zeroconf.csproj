@@ -13,7 +13,9 @@
     <IncludeSymbols>true</IncludeSymbols>
     <UseFullSemVerForNuGet>true</UseFullSemVerForNuGet>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
+    <GenerateDocumentationFile Condition="'$(Configuration)'=='Release_Internal'">true</GenerateDocumentationFile>
     <DebugType>full</DebugType>
+    <Configurations>Debug;Release;Release_Internal</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Platforms\**\*.*" />

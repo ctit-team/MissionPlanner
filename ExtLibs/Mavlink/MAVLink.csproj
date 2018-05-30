@@ -12,6 +12,7 @@
     <Authors>Michael Oborne</Authors>
     <Company>Michael Oborne</Company>
     <Description>MAVLink for Ardupilot</Description>
+    <Configurations>Debug;Release;Release_Internal</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

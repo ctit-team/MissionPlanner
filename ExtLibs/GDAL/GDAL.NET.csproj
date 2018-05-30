@@ -12,6 +12,7 @@
     <RootNamespace>GDAL</RootNamespace>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <Configurations>Debug;Release;Release_Internal</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="gdal\**" />
